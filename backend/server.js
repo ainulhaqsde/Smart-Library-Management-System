@@ -63,6 +63,7 @@ const origins = (
     ""
 )
     .split(",")
+    .map((origin) => origin.trim())
     .filter(Boolean);
 
 app.use(
@@ -105,6 +106,50 @@ app.use(
 
 
 /* =========================================================
+   DATABASE CONNECTION
+========================================================= */
+
+let databasePromise = null;
+
+function connectDatabase() {
+    if (!databasePromise) {
+        databasePromise = connect().catch(
+            (error) => {
+                databasePromise = null;
+                throw error;
+            }
+        );
+    }
+
+    return databasePromise;
+}
+
+
+/* =========================================================
+   DATABASE MIDDLEWARE
+========================================================= */
+
+app.use(
+    async (req, res, next) => {
+        try {
+            await connectDatabase();
+            next();
+        } catch (error) {
+            console.error(
+                "Database connection failed:",
+                error.message
+            );
+
+            return res.status(500).json({
+                message:
+                    "Database connection failed"
+            });
+        }
+    }
+);
+
+
+/* =========================================================
    HEALTH CHECK
 ========================================================= */
 
@@ -114,6 +159,9 @@ app.get(
         res.json({
             status: "ok",
             service: "smart-library",
+            environment:
+                process.env.NODE_ENV ||
+                "development",
             time: new Date().toISOString()
         });
     }
@@ -215,28 +263,37 @@ app.use(errorHandler);
 
 
 /* =========================================================
-   SERVER STARTUP
+   LOCAL SERVER
 ========================================================= */
 
-const port =
-    process.env.PORT || 5000;
+if (require.main === module) {
+    const port =
+        process.env.PORT || 5000;
 
-connect()
-    .then(() => {
-        app.listen(
-            port,
-            () => {
-                console.log(
-                    `Smart Library running on port ${port}`
-                );
-            }
-        );
-    })
-    .catch((error) => {
-        console.error(
-            "Startup failed:",
-            error.message
-        );
+    connectDatabase()
+        .then(() => {
+            app.listen(
+                port,
+                () => {
+                    console.log(
+                        `Smart Library running on port ${port}`
+                    );
+                }
+            );
+        })
+        .catch((error) => {
+            console.error(
+                "Startup failed:",
+                error.message
+            );
 
-        process.exit(1);
-    });
+            process.exit(1);
+        });
+}
+
+
+/* =========================================================
+   EXPORT EXPRESS APP
+========================================================= */
+
+module.exports = app;
