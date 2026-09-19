@@ -214,7 +214,7 @@ app.use(
 
 const front = path.join(
     __dirname,
-    "../frontend"
+    "../public"
 );
 
 app.use(
