@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <meta
+        name="theme-color"
+        content="#0b1736"
+    >
+
+    <title>Smart Library Management System</title>
+
+    <!-- Main Stylesheet -->
+    <link
+        rel="stylesheet"
+        href="./css/style.css"
+    >
+</head>
+
+<body>
+
+    <!-- =====================================================
+         TOAST NOTIFICATIONS
+    ====================================================== -->
+
+    <div id="toast"></div>
+
+
+    <!-- =====================================================
+         AUTHENTICATION
+    ====================================================== -->
+
+    <section
+        id="authView"
+        class="auth"
+    >
+
+        <!-- Authentication Hero -->
+        <div class="auth-hero">
+
+            <div class="brand big">
+                ▣
+                <span>Smart Library</span>
+            </div>
+
+
+            <div>
+
+                <span class="kicker">
+                    SMART LIBRARY MANAGEMENT
+                </span>
+
+                <h1>
+                    Knowledge,<br>
+                    organized.<br>
+                    <em>Learning, simplified.</em>
+                </h1>
+
+                <p>
+                    A smarter way to manage books, students,
+                    circulation and library services — all in one place.
+                </p>
+
+
+                <div class="features">
+
+                    <span>
+                        ✓ Easy Book Access
+                    </span>
+
+                    <span>
+                        ✓ Secure Accounts
+                    </span>
+
+                    <span>
+                        ✓ Smart Management
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <small>
+                Smart Library Management System
+                &nbsp; • &nbsp;
+                Simple
+                &nbsp; • &nbsp;
+                Secure
+                &nbsp; • &nbsp;
+                Organized
+            </small>
+
+        </div>
+
+
+        <!-- =================================================
+             AUTHENTICATION PANEL
+        ================================================== -->
+
+        <div class="auth-panel">
+
+            <!-- Theme Button -->
+            <div class="theme-row">
+
+                <button
+                    id="themeAuth"
+                    class="icon-btn"
+                    type="button"
+                    aria-label="Toggle theme"
+                >
+                    ◐
+                </button>
+
+            </div>
+
+
+            <div class="auth-card">
+
+                <!-- =========================================
+                     AUTHENTICATION TABS
+                ========================================== -->
+
+                <div class="tabs">
+
+                    <button
+                        class="tab active"
+                        data-form="loginForm"
+                        type="button"
+                    >
+                        Sign in
+                    </button>
+
+                    <button
+                        class="tab"
+                        data-form="signupForm"
+                        type="button"
+                    >
+                        Create account
+                    </button>
+
+                </div>
+
+
+                <!-- =========================================
+                     LOGIN FORM
+                ========================================== -->
+
+                <form
+                    id="loginForm"
+                    class="form"
+                >
+
+                    <h2>
+                        Welcome back
+                    </h2>
+
+                    <p>
+                        Sign in to access your Smart Library account.
+                    </p>
+
+
+                    <label>
+                        Email address
+
+                        <input
+                            id="loginEmail"
+                            type="email"
+                            autocomplete="email"
+                            required
+                            placeholder="name@example.com"
+                        >
+                    </label>
+
+
+                    <label>
+                        Password
+
+                        <input
+                            id="loginPassword"
+                            type="password"
+                            autocomplete="current-password"
+                            required
+                            placeholder="••••••••"
+                        >
+                    </label>
+
+
+                    <button
+                        type="button"
+                        id="forgotBtn"
+                        class="text-btn"
+                    >
+                        Forgot password?
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="primary"
+                    >
+                        Sign in
+                    </button>
+
+                </form>
+
+
+                <!-- =========================================
+                     STUDENT REGISTRATION FORM
+                ========================================== -->
+
+                <form
+                    id="signupForm"
+                    class="form hidden"
+                >
+
+                    <h2>
+                        Create your account
+                    </h2>
+
+                    <p>
+                        Join Smart Library and manage your library
+                        access from one secure account.
+                    </p>
+
+
+                    <label>
+                        Full name
+
+                        <input
+                            id="signupName"
+                            type="text"
+                            required
+                            maxlength="100"
+                            autocomplete="name"
+                            placeholder="Enter your full name"
+                        >
+                    </label>
+
+
+                    <label>
+                        Email address
+
+                        <input
+                            id="signupEmail"
+                            type="email"
+                            required
+                            autocomplete="email"
+                            placeholder="name@example.com"
+                        >
+                    </label>
+
+
+                    <label>
+                        Student ID
+                        <span>(optional)</span>
+
+                        <input
+                            id="signupStudentId"
+                            type="text"
+                            autocomplete="off"
+                            placeholder="Enter your student ID"
+                        >
+                    </label>
+
+
+                    <label>
+                        Password
+
+                        <input
+                            id="signupPassword"
+                            type="password"
+                            minlength="8"
+                            required
+                            autocomplete="new-password"
+                            placeholder="Minimum 8 characters"
+                        >
+                    </label>
+
+
+                    <button
+                        type="submit"
+                        class="primary"
+                    >
+                        Create account
+                    </button>
+
+                </form>
+
+
+                <!-- =========================================
+                     FORGOT PASSWORD FORM
+                ========================================== -->
+
+                <form
+                    id="forgotForm"
+                    class="form hidden"
+                >
+
+                    <h2>
+                        Recover your account
+                    </h2>
+
+                    <p>
+                        Enter your email address to receive a secure
+                        password reset link.
+                    </p>
+
+
+                    <label>
+                        Email address
+
+                        <input
+                            id="forgotEmail"
+                            type="email"
+                            required
+                            autocomplete="email"
+                            placeholder="name@example.com"
+                        >
+                    </label>
+
+
+                    <button
+                        type="submit"
+                        class="primary"
+                    >
+                        Send reset link
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="secondary backLogin"
+                    >
+                        Back to sign in
+                    </button>
+
+                </form>
+
+
+                <!-- =========================================
+                     RESET PASSWORD FORM
+                ========================================== -->
+
+                <form
+                    id="resetForm"
+                    class="form hidden"
+                >
+
+                    <h2>
+                        Create a new password
+                    </h2>
+
+                    <p>
+                        Choose a secure password with at least
+                        8 characters.
+                    </p>
+
+
+                    <label>
+                        New password
+
+                        <input
+                            id="resetPassword"
+                            type="password"
+                            minlength="8"
+                            required
+                            autocomplete="new-password"
+                            placeholder="Enter new password"
+                        >
+                    </label>
+
+
+                    <label>
+                        Confirm password
+
+                        <input
+                            id="resetConfirm"
+                            type="password"
+                            minlength="8"
+                            required
+                            autocomplete="new-password"
+                            placeholder="Confirm new password"
+                        >
+                    </label>
+
+
+                    <button
+                        type="submit"
+                        class="primary"
+                    >
+                        Update password
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         APPLICATION
+    ====================================================== -->
+
+    <section
+        id="appView"
+        class="app hidden"
+    >
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside id="sidebar">
+
+            <div class="brand">
+                ▣
+                <span>Smart Library</span>
+            </div>
+
+
+            <!-- Current User -->
+
+            <div class="user-mini">
+
+                <div id="avatar">
+                    L
+                </div>
+
+                <div>
+
+                    <b id="sideName">
+                        User
+                    </b>
+
+                    <small id="sideRole">
+                        Student
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- Navigation -->
+
+            <nav
+                id="nav"
+                aria-label="Main navigation"
+            ></nav>
+
+
+            <!-- Sidebar Bottom -->
+
+            <div class="side-bottom">
+
+                <button
+                    id="themeBtn"
+                    class="nav-btn"
+                    type="button"
+                >
+                    ◐
+                    <span>Theme</span>
+                </button>
+
+
+                <button
+                    id="logout"
+                    class="nav-btn danger-text"
+                    type="button"
+                >
+                    ↪
+                    <span>Sign out</span>
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Mobile Sidebar Overlay -->
+
+        <div id="scrim"></div>
+
+
+        <!-- =================================================
+             MAIN WORKSPACE
+        ================================================== -->
+
+        <main class="workspace">
+
+            <!-- Header -->
+
+            <header>
+
+                <button
+                    id="menuBtn"
+                    class="icon-btn mobile"
+                    type="button"
+                    aria-label="Open navigation"
+                >
+                    ☰
+                </button>
+
+
+                <div>
+
+                    <small id="crumb">
+                        Overview
+                    </small>
+
+                    <h2 id="pageTitle">
+                        Dashboard
+                    </h2>
+
+                </div>
+
+
+                <div class="header-actions">
+
+                    <button
+                        id="refreshBtn"
+                        class="icon-btn"
+                        type="button"
+                        title="Refresh"
+                        aria-label="Refresh page"
+                    >
+                        ↻
+                    </button>
+
+
+                    <div class="profile-pill">
+
+                        <div id="topAvatar">
+                            L
+                        </div>
+
+                        <span id="topName">
+                            User
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- Dynamic Page Content -->
+
+            <div
+                id="content"
+                class="content"
+            ></div>
+
+        </main>
+
+    </section>
+
+
+    <!-- =====================================================
+         GLOBAL MODAL
+    ====================================================== -->
+
+    <div
+        id="modal"
+        class="modal hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+    >
+
+        <div class="modal-card">
+
+            <div class="modal-head">
+
+                <div>
+
+                    <small id="modalEyebrow">
+                        MANAGE
+                    </small>
+
+                    <h2 id="modalTitle">
+                        Details
+                    </h2>
+
+                </div>
+
+
+                <button
+                    id="modalClose"
+                    class="icon-btn"
+                    type="button"
+                    aria-label="Close dialog"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- Dynamic Modal Content -->
+
+            <div id="modalBody"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         APPLICATION JAVASCRIPT
+    ====================================================== -->
+
+    <script src="./js/app.js"></script>
+
+</body>
+
+</html>
