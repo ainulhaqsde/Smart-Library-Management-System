@@ -10,7 +10,7 @@
 ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-Authentication-000000?logo=jsonwebtokens)
 ![Vercel](https://img.shields.io/badge/Deployment-Vercel-black?logo=vercel)
-![Status](https://img.shields.io/badge/Status-Development-yellow)
+![Status](https://img.shields.io/badge/Status-Live-brightgreen)
 
 **Smart Library Management System** is a full-stack library operations platform designed to simplify book management, student accounts, borrowing, returns, overdue tracking, fines, and everyday library administration.
 
@@ -24,11 +24,15 @@ It combines **role-based authentication, real-time book availability, student se
 
 ### 🌐 Application
 
-`Coming Soon`
+https://smartlibraryainuldev.vercel.app/
 
-### ⚙️ Backend API
+### ⚙️ Backend API Health Check
 
-`Coming Soon`
+https://smartlibraryainuldev.vercel.app/api/health
+
+### 💻 GitHub Repository
+
+https://github.com/ainulhaqsde/Smart-Library-Management-System
 
 ---
 
@@ -58,7 +62,7 @@ It combines **role-based authentication, real-time book availability, student se
 - 🗃️ MongoDB Atlas Persistence
 - 🌙 Light & Dark Mode
 - 📱 Responsive User Interface
-- ☁️ Production-Ready Architecture
+- ☁️ Production Deployment with Vercel
 
 ---
 
@@ -154,6 +158,16 @@ The dashboard can display:
 - 🗂️ Total Book Titles
 - 🕒 Recent Circulation
 
+Administrators can manage:
+
+- Books
+- Students
+- Categories
+- Borrowings
+- Returns
+- Fines
+- Library statistics
+
 ---
 
 # 🎓 Student Dashboard
@@ -199,6 +213,24 @@ Status
 ```
 
 The system automatically tracks available inventory when books are borrowed or returned.
+
+### Book Operations
+
+```text
+Add Book
+   ↓
+Store in MongoDB
+   ↓
+Display in Catalog
+   ↓
+Student Borrows
+   ↓
+Available Copies Decrease
+   ↓
+Student Returns
+   ↓
+Available Copies Increase
+```
 
 ---
 
@@ -307,7 +339,7 @@ Fine calculations are performed by the backend rather than trusted to the browse
 ## ☁️ Deployment
 
 - 💻 GitHub — Source Code
-- ▲ Vercel — Deployment
+- ▲ Vercel — Full-Stack Deployment
 - 🍃 MongoDB Atlas — Cloud Database
 
 ---
@@ -318,16 +350,21 @@ Fine calculations are performed by the backend rather than trusted to the browse
 Smart-Library-Management-System/
 │
 ├── backend/
+│   │
 │   ├── config/
 │   │   └── db.js
+│   │
 │   ├── middleware/
-│   │   └── auth.js
+│   │   ├── auth.js
+│   │   └── error.js
+│   │
 │   ├── models/
 │   │   ├── Book.js
 │   │   ├── Borrow.js
 │   │   ├── Category.js
 │   │   ├── Fine.js
 │   │   └── User.js
+│   │
 │   ├── routes/
 │   │   ├── auth.js
 │   │   ├── books.js
@@ -336,17 +373,28 @@ Smart-Library-Management-System/
 │   │   ├── dashboard.js
 │   │   ├── fines.js
 │   │   └── users.js
+│   │
 │   ├── scripts/
 │   │   └── createAdmin.js
+│   │
 │   └── server.js
 │
-├── frontend/
+├── public/
+│   │
+│   ├── assets/
+│   │   ├── 1.png
+│   │   ├── PIC.png
+│   │   └── SLMS.png
+│   │
 │   ├── css/
 │   │   └── style.css
+│   │
 │   ├── js/
 │   │   └── app.js
+│   │
 │   └── index.html
 │
+├── server.js
 ├── .env.example
 ├── .gitignore
 ├── package.json
@@ -370,6 +418,24 @@ The application includes:
 - Password Reset
 - Secure Password Hashing
 
+### Authentication Flow
+
+```text
+User
+  ↓
+Login / Registration
+  ↓
+Express API
+  ↓
+Validate Credentials
+  ↓
+JWT Generated
+  ↓
+Client Authenticated
+  ↓
+Protected Dashboard
+```
+
 ### Password Reset Flow
 
 ```text
@@ -389,6 +455,8 @@ Password securely hashed
         ↓
 User can login using new password
 ```
+
+> Production email delivery requires valid SMTP configuration.
 
 ---
 
@@ -456,6 +524,31 @@ using:
 
 as the template.
 
+Example variable names:
+
+```env
+NODE_ENV=development
+
+MONGO_URI=YOUR_MONGODB_CONNECTION_STRING
+
+JWT_SECRET=YOUR_SECURE_JWT_SECRET
+
+ADMIN_EMAIL=YOUR_ADMIN_EMAIL
+ADMIN_PASSWORD=YOUR_ADMIN_PASSWORD
+
+SMTP_HOST=
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=
+SMTP_PASS=
+MAIL_FROM=Smart Library <no-reply@example.com>
+
+APP_URL=http://localhost:5000
+CLIENT_URL=http://localhost:5000
+```
+
+> Never commit your real `.env` file or credentials to GitHub.
+
 ## 4️⃣ Create Admin
 
 ```bash
@@ -474,29 +567,126 @@ Local application:
 http://localhost:5000
 ```
 
+API health check:
+
+```text
+http://localhost:5000/api/health
+```
+
 ---
 
 # 🌐 Production Deployment
 
+The application is deployed as a **single full-stack application**.
+
 ```text
                  SMART LIBRARY
                        │
-                 GitHub Repository
+                       ↓
+                GitHub Repository
                        │
+                       ↓
                      Vercel
                        │
-              Node.js + Express API
-                       │
+             ┌─────────┴─────────┐
+             │                   │
+        Static Frontend      Express API
+             │                   │
+             └─────────┬─────────┘
+                       ↓
                   MongoDB Atlas
 ```
 
-Production environment variables should be configured through the hosting platform rather than committed to GitHub.
+### Production Application
+
+```text
+https://smartlibraryainuldev.vercel.app/
+```
+
+### Production API Health Check
+
+```text
+https://smartlibraryainuldev.vercel.app/api/health
+```
+
+### Production Environment Variables
+
+Production environment variables are configured through Vercel rather than committed to GitHub.
+
+Required/used variable names include:
+
+```text
+NODE_ENV
+MONGO_URI
+JWT_SECRET
+ADMIN_EMAIL
+ADMIN_PASSWORD
+SMTP_HOST
+SMTP_PORT
+SMTP_SECURE
+SMTP_USER
+SMTP_PASS
+MAIL_FROM
+APP_URL
+CLIENT_URL
+```
+
+Production URL variables:
+
+```text
+APP_URL=https://smartlibraryainuldev.vercel.app
+CLIENT_URL=https://smartlibraryainuldev.vercel.app
+```
+
+### MongoDB Atlas
+
+The production application uses **MongoDB Atlas** as its cloud database.
+
+MongoDB credentials remain server-side and are supplied through environment variables.
+
+---
+
+# 🚀 Deployment Workflow
+
+```text
+VS Code
+   ↓
+Local Development
+   ↓
+Git
+   ↓
+GitHub main branch
+   ↓
+Automatic Vercel Deployment
+   ↓
+Production Application
+```
+
+After making changes locally:
+
+```bash
+git status
+```
+
+```bash
+git add .
+```
+
+```bash
+git commit -m "Describe your changes"
+```
+
+```bash
+git push origin main
+```
+
+Vercel automatically detects new commits pushed to the connected `main` branch and creates a new deployment.
 
 ---
 
 # 🧪 Project Testing
 
-Before production launch:
+Current application testing:
 
 - [x] Admin Login
 - [x] Student Login
@@ -520,8 +710,10 @@ Before production launch:
 - [x] Light Mode
 - [x] Dark Mode
 - [x] Responsive Interface
-- [ ] Production Deployment
-- [ ] Production Password Reset Verification
+- [x] MongoDB Atlas Integration
+- [x] Vercel Production Deployment
+- [x] Production API Deployment
+- [ ] Production Password Reset Email Verification
 
 ---
 
@@ -550,6 +742,68 @@ Responsive behavior covers:
 
 ---
 
+# 🔌 REST API
+
+The backend exposes REST API routes through the same production domain.
+
+Main API groups:
+
+```text
+/api/auth
+/api/books
+/api/borrowings
+/api/users
+/api/categories
+/api/fines
+/api/dashboard
+```
+
+Health endpoint:
+
+```text
+GET /api/health
+```
+
+Production example:
+
+```text
+https://smartlibraryainuldev.vercel.app/api/health
+```
+
+---
+
+# ☁️ Production Architecture
+
+```text
+Browser
+   │
+   ↓
+Vercel
+   │
+   ├── Public Frontend
+   │      ├── HTML
+   │      ├── CSS
+   │      ├── JavaScript
+   │      └── Assets
+   │
+   └── Node.js / Express
+          │
+          ├── Authentication
+          ├── Books
+          ├── Students
+          ├── Borrowings
+          ├── Categories
+          ├── Fines
+          └── Dashboard
+                  │
+                  ↓
+             MongoDB Atlas
+```
+
+The frontend and backend are deployed together under one production application rather than maintained as separate websites.
+
+---
+
 # 🔮 Future Improvements
 
 Potential future features include:
@@ -567,6 +821,8 @@ Potential future features include:
 - 🧪 Automated testing
 - 📡 Production monitoring
 - 🔄 CI/CD improvements
+- 📊 Advanced admin analytics
+- 🔔 Real-time notifications
 
 ---
 
@@ -610,7 +866,11 @@ Smart Library Operations
 
 **Authentication:** `JWT`
 
-**Status:** `Development`
+**Deployment:** `Vercel`
+
+**Production Domain:** `smartlibraryainuldev.vercel.app`
+
+**Status:** `Deployed / Active Development`
 
 ---
 
@@ -622,7 +882,11 @@ https://github.com/ainulhaqsde/Smart-Library-Management-System
 
 ### 🌐 Live Application
 
-`Coming Soon`
+https://smartlibraryainuldev.vercel.app/
+
+### ⚙️ API Health Check
+
+https://smartlibraryainuldev.vercel.app/api/health
 
 ---
 
@@ -639,7 +903,7 @@ MongoDB Atlas
    +
 Authentication
    +
-Cloud Deployment
+Vercel Deployment
    ↓
 📚 SMART LIBRARY MANAGEMENT SYSTEM
 ```
