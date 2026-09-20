@@ -7,9 +7,9 @@
     "node": "24.x"
   },
   "scripts": {
-  "start": "node backend/server.js",
-  "dev": "nodemon backend/server.js",
-  "seed:admin": "node backend/scripts/createAdmin.js"
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "seed:admin": "node backend/scripts/createAdmin.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -19,7 +19,8 @@
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.0",
-    "nodemailer": "^7.0.6"
+    "nodemailer": "^7.0.6",
+    "resend": "^6.25.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
