@@ -28,7 +28,7 @@ https://smartlibrary-ainuldev.vercel.app/
 
 ### ⚙️ Backend API Health Check
 
-https://smartlibraryainuldev.vercel.app/api/health
+https://smartlibrary-ainuldev.vercel.app/api/health
 
 ### 💻 GitHub Repository
 
