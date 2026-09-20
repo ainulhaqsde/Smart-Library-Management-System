@@ -24,7 +24,7 @@ It combines **role-based authentication, real-time book availability, student se
 
 ### 🌐 Application
 
-https://smartlibraryainuldev.vercel.app/
+https://smartlibrary-ainuldev.vercel.app/
 
 ### ⚙️ Backend API Health Check
 
