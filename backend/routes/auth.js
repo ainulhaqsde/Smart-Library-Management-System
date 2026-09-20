@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
 const User = require("../models/User");
 const { protect } = require("../middleware/auth");
@@ -215,9 +215,7 @@ r.post(
 
                 user.resetPasswordToken =
                     crypto
-                        .createHash(
-                            "sha256"
-                        )
+                        .createHash("sha256")
                         .update(raw)
                         .digest("hex");
 
@@ -233,67 +231,127 @@ r.post(
                         "http://localhost:5000"
                     }/?reset=${raw}`;
 
+                /*
+                 * Development:
+                 * Return the reset URL so password reset
+                 * can still be tested locally without Resend.
+                 */
                 if (
-                    process.env.SMTP_HOST
-                ) {
-                    const transporter =
-                        nodemailer.createTransport(
-                            {
-                                host:
-                                    process.env
-                                        .SMTP_HOST,
-
-                                port: +(
-                                    process.env
-                                        .SMTP_PORT ||
-                                    587
-                                ),
-
-                                secure:
-                                    String(
-                                        process.env
-                                            .SMTP_SECURE
-                                    ) ===
-                                    "true",
-
-                                auth:
-                                    process.env
-                                        .SMTP_USER
-                                        ? {
-                                              user:
-                                                  process
-                                                      .env
-                                                      .SMTP_USER,
-
-                                              pass:
-                                                  process
-                                                      .env
-                                                      .SMTP_PASS
-                                          }
-                                        : undefined
-                            }
-                        );
-
-                    await transporter.sendMail(
-                        {
-                            from:
-                                process.env
-                                    .MAIL_FROM,
-
-                            to: user.email,
-
-                            subject:
-                                "Smart Library password reset",
-
-                            text:
-                                `Use this link within 15 minutes: ${url}`
-                        }
-                    );
-                } else if (
                     process.env.NODE_ENV !==
-                    "production"
+                        "production" &&
+                    !process.env.RESEND_API_KEY
                 ) {
                     devResetUrl = url;
+                } else {
+                    /*
+                     * Production:
+                     * Send password reset email using Resend.
+                     */
+                    if (!process.env.RESEND_API_KEY) {
+                        throw new Error(
+                            "RESEND_API_KEY is not configured"
+                        );
+                    }
+
+                    const resend = new Resend(
+                        process.env.RESEND_API_KEY
+                    );
+
+                    const {
+                        data,
+                        error
+                    } = await resend.emails.send({
+                        from:
+                            process.env.MAIL_FROM ||
+                            "Smart Library <onboarding@resend.dev>",
+
+                        to: [user.email],
+
+                        subject:
+                            "Reset your Smart Library password",
+
+                        html: `
+                            <div style="
+                                font-family: Arial, sans-serif;
+                                max-width: 600px;
+                                margin: 0 auto;
+                                padding: 24px;
+                                color: #222;
+                            ">
+                                <h2>
+                                    Smart Library
+                                </h2>
+
+                                <p>
+                                    We received a request to reset
+                                    your Smart Library password.
+                                </p>
+
+                                <p>
+                                    Click the button below to create
+                                    a new password.
+                                </p>
+
+                                <p style="
+                                    margin: 28px 0;
+                                ">
+                                    <a
+                                        href="${url}"
+                                        style="
+                                            display: inline-block;
+                                            padding: 12px 20px;
+                                            background: #111827;
+                                            color: #ffffff;
+                                            text-decoration: none;
+                                            border-radius: 6px;
+                                            font-weight: bold;
+                                        "
+                                    >
+                                        Reset Password
+                                    </a>
+                                </p>
+
+                                <p>
+                                    This password reset link will
+                                    expire in 15 minutes.
+                                </p>
+
+                                <p>
+                                    If you did not request a password
+                                    reset, you can ignore this email.
+                                </p>
+
+                                <hr style="
+                                    margin: 28px 0;
+                                    border: 0;
+                                    border-top: 1px solid #dddddd;
+                                ">
+
+                                <p style="
+                                    font-size: 12px;
+                                    color: #666666;
+                                ">
+                                    Smart Library Management System
+                                </p>
+                            </div>
+                        `
+                    });
+
+                    if (error) {
+                        console.error(
+                            "Resend email error:",
+                            error
+                        );
+
+                        throw new Error(
+                            "Unable to send password reset email"
+                        );
+                    }
+
+                    console.log(
+                        "Password reset email sent:",
+                        data?.id
+                    );
                 }
             }
 
@@ -303,6 +361,11 @@ r.post(
                 devResetUrl
             });
         } catch (error) {
+            console.error(
+                "Forgot password error:",
+                error
+            );
+
             next(error);
         }
     }
@@ -376,6 +439,11 @@ r.post(
                     "Password reset successfully"
             });
         } catch (error) {
+            console.error(
+                "Reset password error:",
+                error
+            );
+
             res.status(500).json({
                 message: "Reset failed"
             });
