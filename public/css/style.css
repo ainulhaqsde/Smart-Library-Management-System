@@ -132,6 +132,7 @@ button {
        Dark blue overlay keeps the text readable while
        allowing the warm library lighting to remain visible.
     */
+
     background-image:
         linear-gradient(
             90deg,
@@ -357,6 +358,63 @@ textarea:focus {
 textarea {
     min-height: 95px;
     resize: vertical;
+}
+
+
+/* =========================================================
+   PASSWORD SHOW / HIDE
+========================================================= */
+
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.password-field input {
+    width: 100%;
+    padding-right: 48px;
+}
+
+.password-toggle {
+    position: absolute;
+
+    top: 50%;
+    right: 10px;
+
+    transform: translateY(-50%);
+
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: transparent;
+    color: var(--muted);
+
+    cursor: pointer;
+
+    font-size: 16px;
+    line-height: 1;
+
+    transition:
+        background 0.2s,
+        color 0.2s;
+}
+
+.password-toggle:hover {
+    background: var(--surface2);
+    color: var(--text);
+}
+
+.password-toggle:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
 }
 
 

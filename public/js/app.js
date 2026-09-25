@@ -150,6 +150,56 @@ $$(".backLogin").forEach((button) => {
 
 
 /* =========================================================
+   PASSWORD SHOW / HIDE
+========================================================= */
+
+function setupPasswordToggles(root = document) {
+    root.querySelectorAll("[data-password-toggle]").forEach((button) => {
+        if (button.dataset.toggleReady === "true") {
+            return;
+        }
+
+        const input = document.getElementById(
+            button.dataset.passwordToggle
+        );
+
+        if (!input) {
+            return;
+        }
+
+        button.dataset.toggleReady = "true";
+
+        button.addEventListener("click", () => {
+            const isHidden =
+                input.type === "password";
+
+            input.type =
+                isHidden ? "text" : "password";
+
+            button.textContent =
+                isHidden ? "🙈" : "👁";
+
+            button.setAttribute(
+                "aria-label",
+                isHidden
+                    ? "Hide password"
+                    : "Show password"
+            );
+
+            button.setAttribute(
+                "title",
+                isHidden
+                    ? "Hide password"
+                    : "Show password"
+            );
+        });
+    });
+}
+
+setupPasswordToggles();
+
+
+/* =========================================================
    LOGIN
 ========================================================= */
 

@@ -62,6 +62,11 @@ const schema = new mongoose.Schema(
             index: true
         },
 
+
+        /* =================================================
+           PASSWORD RESET
+        ================================================= */
+
         resetPasswordToken: {
             type: String,
             select: false
@@ -71,6 +76,11 @@ const schema = new mongoose.Schema(
             type: Date,
             select: false
         },
+
+
+        /* =================================================
+           LOGIN INFORMATION
+        ================================================= */
 
         lastLoginAt: {
             type: Date
